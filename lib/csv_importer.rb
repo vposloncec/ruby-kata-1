@@ -1,14 +1,15 @@
 require "csv"
+require 'pry'
 
 module CsvImporter
   class << self
     def load_authors(path)
       [].tap do |authors|
-        CSV.foreach(path, col_sep: ";", headers: true) do |entry|
+        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |entry|
           authors << {
-            email: entry["email"],
-            first_name: entry["firstname"],
-            last_name: entry["lastname"],
+            email: entry[:email],
+            first_name: entry[:firstname],
+            last_name: entry[:lastname],
           }
         end
       end
@@ -16,12 +17,12 @@ module CsvImporter
 
     def load_books(path)
       [].tap do |books|
-        CSV.foreach(path, col_sep: ";", headers: true) do |entry|
+        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |entry|
           books << {
-            title: entry["title"],
-            description: entry["description"],
-            authors: entry["authors"],
-            isbn: entry["isbn"],
+            title: entry[:title],
+            description: entry[:description],
+            authors: entry[:authors],
+            isbn: entry[:isbn],
           }
         end
       end
@@ -29,13 +30,13 @@ module CsvImporter
 
     def load_magazines(path)
       [].tap do |mags|
-        CSV.foreach(path, col_sep: ";", headers: true) do |entry|
+        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |entry|
           mags << {
-            title: entry["title"],
-            description: entry["description"],
-            authors: entry["authors"],
-            isbn: entry["isbn"],
-            published_at: entry["publishedAt"],
+            title: entry[:title],
+            description: entry[:description],
+            authors: entry[:authors],
+            isbn: entry[:isbn],
+            published_at: entry[:publishedAt],
           }
         end
       end
