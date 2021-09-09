@@ -2,6 +2,17 @@
 
 Start specs with `rspec spec`
 
+## Usage
+
+`./bin/run` to see commands available
+
+#### Printing all csv data
+ * `run books`
+ * `run magazines`
+ * `run authors`
+
+
+## About
 
 First I started off with the idea to create the app using [off the rails active record](https://github.com/jhollinger/otr-activerecord).
 While implementing it, I ran into a db setup issue which took a lot of my time, I had problems integrating rspec into otr-ar.

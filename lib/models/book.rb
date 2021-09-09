@@ -1,4 +1,5 @@
 require_relative "../csv_importer"
+require 'pry'
 
 module Echocat
   class Book
@@ -12,12 +13,17 @@ module Echocat
       end
     end
 
-    attr_accessor :title, :description, :isbn
+    attr_accessor :title, :description, :isbn, :authors
 
     def initialize(params)
       @title = params[:title]
       @description = params[:description]
       @isbn = params[:isbn]
+      @authors = params[:authors]
+    end
+
+    def to_s
+      "Book: #{title}, #{isbn}, #{authors}, #{description}"
     end
   end
 end
