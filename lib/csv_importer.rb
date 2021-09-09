@@ -4,42 +4,47 @@ require 'pry'
 module CsvImporter
   class << self
     def load_authors(path)
-      [].tap do |authors|
-        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |entry|
-          authors << {
-            email: entry[:email],
-            first_name: entry[:firstname],
-            last_name: entry[:lastname],
-          }
-        end
+      load_csv(path) do |row|
+        {
+          email: row[:email],
+          first_name: row[:firstname],
+          last_name: row[:lastname],
+        }
       end
     end
 
     def load_books(path)
-      [].tap do |books|
-        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |entry|
-          books << {
-            title: entry[:title],
-            description: entry[:description],
-            authors: entry[:authors],
-            isbn: entry[:isbn],
-          }
-        end
+      load_csv(path) do |row|
+        {
+          title: row[:title],
+          description: row[:description],
+          authors: row[:authors],
+          isbn: row[:isbn],
+        }
       end
     end
 
     def load_magazines(path)
-      [].tap do |mags|
-        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |entry|
-          mags << {
-            title: entry[:title],
-            description: entry[:description],
-            authors: entry[:authors],
-            isbn: entry[:isbn],
-            published_at: entry[:publishedAt],
-          }
+      load_csv(path) do |row|
+        {
+          title: row[:title],
+          description: row[:description],
+          authors: row[:authors],
+          isbn: row[:isbn],
+          published_at: row[:publishedAt],
+        }
+      end
+    end
+
+    private
+
+    def load_csv(path)
+      [].tap do |entry|
+        CSV.foreach(path, col_sep: ";", headers: true, header_converters: :symbol) do |row|
+          entry << yield(row)
         end
       end
+
     end
   end
 end
