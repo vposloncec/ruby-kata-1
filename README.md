@@ -7,9 +7,9 @@ Start specs with `rspec spec`
 `./bin/run` to see commands available
 
 #### Printing all csv data
- * `run books`
- * `run magazines`
- * `run authors`
+ * `run books` -- isbn optional parameter to find by
+ * `run magazines` -- isbn optional parameter to find by
+ * `run authors` 
 
 
 ## About

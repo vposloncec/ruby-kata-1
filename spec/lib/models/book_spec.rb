@@ -5,7 +5,7 @@ require_relative "../../../lib/models/author"
 module Echocat
   RSpec.describe Book do
     let(:example_authors) { [Author.new(first_name: "Edgar Allan", last_name: "Poe")] }
-    let(:example) { described_class.new(title: "Foo", description: "bar", authors: example_authors, isbn: 42) }
+    let(:example) { described_class.new(title: "Foo", description: "bar", authors: example_authors, isbn: "24-24") }
 
     before {
       described_class.all << example
@@ -22,7 +22,7 @@ module Echocat
     end
 
     it "can be fetched by isbn" do
-      expect(described_class.find_by(:isbn, 42)).to eq(example)
+      expect(described_class.find_by(:isbn, "24-24")).to eq(example)
     end
   end
 

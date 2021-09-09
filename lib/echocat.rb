@@ -10,25 +10,42 @@ module Echocat
       Dry::CLI.new(Echocat::Commands).call
     end
   end
+
   module Commands
     extend Dry::CLI::Registry
 
     class Book < Dry::CLI::Command
       desc "Print books"
-      def call(*args)
-        puts Echocat::Book.from_csv(File.join(File.expand_path("../data", __dir__), "books.csv"))
+
+      argument :isbn, desc: "Find magazine by isbn"
+
+      def call(isbn: nil, **)
+        mags = Echocat::Book.from_csv(File.join(File.expand_path("../data", __dir__), "book.csv"))
+        if isbn
+          puts Echocat::Book.find_by(:isbn, isbn)
+        else
+          puts mags
+        end
       end
     end
 
     class Magazine < Dry::CLI::Command
       desc "Print magazines"
-      def call(*args)
-        puts Echocat::Magazine.from_csv(File.join(File.expand_path("../data", __dir__), "magazines.csv"))
+      argument :isbn, desc: "Find magazine by isbn"
+
+      def call(isbn: nil, **)
+        mags = Echocat::Magazine.from_csv(File.join(File.expand_path("../data", __dir__), "magazines.csv"))
+        if isbn
+          puts Echocat::Magazine.find_by(:isbn, isbn)
+        else
+          puts mags
+        end
       end
     end
 
     class Author < Dry::CLI::Command
       desc "Print authors"
+
       def call(*args)
         puts Echocat::Author.from_csv(File.join(File.expand_path("../data", __dir__), "authors.csv"))
       end
@@ -42,10 +59,10 @@ module Echocat
       end
     end
 
-    register "version",   Version
-    register "magazines",   Magazine
-    register "authors",   Author
-    register "books",   Book
+    register "version", Version
+    register "magazines", Magazine
+    register "authors", Author
+    register "books", Book
 
   end
 end

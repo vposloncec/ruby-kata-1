@@ -3,7 +3,7 @@ require_relative "../../../lib/models/magazine"
 
 module Echocat
   RSpec.describe Magazine do
-    let(:example) { described_class.new(title: "Foo", isbn: 42) }
+    let(:example) { described_class.new(title: "Foo", isbn: "42-42") }
 
     before { described_class.all << example }
 
@@ -19,7 +19,7 @@ module Echocat
     end
 
     it "can be fetched by isbn" do
-      expect(described_class.find_by(:isbn, 42)).to eq(example)
+      expect(described_class.find_by(:isbn, "42-42")).to eq(example)
     end
 
   end

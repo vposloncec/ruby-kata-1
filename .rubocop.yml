@@ -1,6 +1,5 @@
 require:
   - rubocop-performance
-  - rubocop-rails
   - rubocop-rspec
 
 AllCops:
@@ -170,14 +169,6 @@ Layout/MultilineMethodCallIndentation:
     that span more than one line.
   Enabled: true
   EnforcedStyle: indented
-
-# Rails Cops
-
-Rails/Delegate:
-  Description: 'Prefer delegate method for delegations.'
-  Enabled: false
-
-# Bundler Cops
 
 Bundler/OrderedGems:
   Enabled: false
