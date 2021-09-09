@@ -7,6 +7,10 @@ module Echocat
         @all ||= []
       end
 
+      def find_by(key, value)
+        all.detect { |e| e.send(key) == value }
+      end
+
       def from_csv(file)
         @all = CsvImporter.load_authors(file).map { |record| new(record) }
       end

@@ -8,6 +8,10 @@ module Echocat
         @all ||= []
       end
 
+      def find_by(key, value)
+        all.detect { |e| e.send(key) == value }
+      end
+
       def from_csv(path)
         @all = CsvImporter.load_books(path).map { |record| new(record) }
       end
