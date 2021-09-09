@@ -2,6 +2,6 @@
 
 module Echocat
   def self.run
-    puts 'Hello World!'
+    Rails.logger.debug "Hello World!"
   end
 end
