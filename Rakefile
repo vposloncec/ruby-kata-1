@@ -1,1 +1,1 @@
-require 'bundler/setup'
+require "bundler/setup"

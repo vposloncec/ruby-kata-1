@@ -8,8 +8,9 @@ Start specs with `rspec spec`
 
 #### Commands
  * `./bin/run books [isbn]` -- retrieve all or add optional parameter isbn to find one
- * `./bin/run magazines` -- retrieve all or add optional parameter isbn to find one
+ * `./bin/run magazines [isbn]` -- retrieve all or add optional parameter isbn to find one
  * `./bin/run authors` 
+ * `./bin/run publications [--sort_by_title]` -- retrieve both books and magazines 
 
 
 ## About

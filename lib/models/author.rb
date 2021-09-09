@@ -1,19 +1,12 @@
 require_relative "../csv_importer"
+require_relative "../findable"
 
 module Echocat
   class Author
-    class << self
-      def all
-        @all ||= []
-      end
+    extend Findable
 
-      def find_by(key, value)
-        all.detect { |e| e.send(key) == value }
-      end
-
-      def from_csv(file)
-        @all = CsvImporter.load_authors(file).map { |record| new(record) }
-      end
+    def self.from_csv(path)
+      CsvImporter.load_authors(path).map { |record| new(record) }
     end
 
     attr_accessor :email, :first_name, :last_name
@@ -22,11 +15,12 @@ module Echocat
       @email = params[:email]
       @first_name = params[:first_name]
       @last_name = params[:last_name]
+
+      Author.all << self
     end
 
     def to_s
       "Author: #{email}, #{first_name}, #{last_name}"
     end
-
   end
 end

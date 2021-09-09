@@ -3,12 +3,18 @@ require_relative "../../../lib/models/magazine"
 
 module Echocat
   RSpec.describe Magazine do
-    let(:example) { described_class.new(title: "Foo", isbn: "42-42") }
+    let!(:example) { described_class.new(title: "Foo", isbn: "42-42") }
 
     before { described_class.all << example }
 
+    after { described_class.all = nil }
+
     it "is created with valid params" do
       expect(example.title).to eq "Foo"
+    end
+
+    it "can be fetched by isbn" do
+      expect(described_class.find_by(:isbn, "42-42")).to eq(example)
     end
 
     it "can be parsed from csv" do
@@ -17,11 +23,5 @@ module Echocat
 
       expect(magazines.length).to be > 1
     end
-
-    it "can be fetched by isbn" do
-      expect(described_class.find_by(:isbn, "42-42")).to eq(example)
-    end
-
   end
-
 end

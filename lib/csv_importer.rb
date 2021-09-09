@@ -1,5 +1,5 @@
 require "csv"
-require 'pry'
+require "pry"
 
 module CsvImporter
   class << self
@@ -36,6 +36,10 @@ module CsvImporter
       end
     end
 
+    def load_publications(magazine_path:, book_path:)
+      load_magazines(magazine_path) + load_books(book_path)
+    end
+
     private
 
     def load_csv(path)
@@ -44,7 +48,6 @@ module CsvImporter
           entry << yield(row)
         end
       end
-
     end
   end
 end

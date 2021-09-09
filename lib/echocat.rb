@@ -1,13 +1,26 @@
 # frozen_string_literal: true
+
 require "dry/cli"
 require "models/book"
 require "models/author"
+require "models/publication"
 require "models/magazine"
 
 module Echocat
+  AUTHOR_CSV = File.join(File.expand_path("../data", __dir__), "authors.csv")
+  MAGAZINE_CSV = File.join(File.expand_path("../data", __dir__), "magazines.csv")
+  BOOK_CSV = File.join(File.expand_path("../data", __dir__), "books.csv")
+
   class << self
     def run
+      load_data
       Dry::CLI.new(Echocat::Commands).call
+    end
+
+    def load_data
+      Author.from_csv(AUTHOR_CSV)
+      Book.from_csv(BOOK_CSV)
+      Magazine.from_csv(MAGAZINE_CSV)
     end
   end
 
@@ -20,7 +33,7 @@ module Echocat
       argument :isbn, desc: "Find magazine by isbn"
 
       def call(isbn: nil, **)
-        mags = Echocat::Book.from_csv(File.join(File.expand_path("../data", __dir__), "book.csv"))
+        mags = Echocat::Book.all
         if isbn
           puts Echocat::Book.find_by(:isbn, isbn)
         else
@@ -34,7 +47,7 @@ module Echocat
       argument :isbn, desc: "Find magazine by isbn"
 
       def call(isbn: nil, **)
-        mags = Echocat::Magazine.from_csv(File.join(File.expand_path("../data", __dir__), "magazines.csv"))
+        mags = Echocat::Magazine.all
         if isbn
           puts Echocat::Magazine.find_by(:isbn, isbn)
         else
@@ -46,8 +59,22 @@ module Echocat
     class Author < Dry::CLI::Command
       desc "Print authors"
 
-      def call(*args)
-        puts Echocat::Author.from_csv(File.join(File.expand_path("../data", __dir__), "authors.csv"))
+      def call(*_args)
+        puts Echocat::Author.all
+      end
+    end
+
+    class Publication < Dry::CLI::Command
+      desc "Print books and magazines"
+
+      option :sort_by_title, type: :boolean, default: false, desc: "sort output by publication title"
+
+      def call(**options)
+        if options[:sort_by_title]
+          puts Echocat::Publication.sorted_by_title
+        else
+          puts Echocat::Publication.all
+        end
       end
     end
 
@@ -63,6 +90,6 @@ module Echocat
     register "magazines", Magazine
     register "authors", Author
     register "books", Book
-
+    register "publications", Publication
   end
 end

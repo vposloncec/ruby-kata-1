@@ -1,20 +1,14 @@
 require_relative "../csv_importer"
+require_relative "../findable"
 
 module Echocat
   class Magazine
-    class << self
-      def all
-        @all ||= []
-      end
+    extend Findable
 
-      def find_by(key, value)
-        all.detect { |e| e.send(key) == value }
-      end
-
-      def from_csv(file)
-        @all = CsvImporter.load_magazines(file).map { |record| new(record) }
-      end
+    def self.from_csv(path)
+      CsvImporter.load_magazines(path).map { |record| new(record) }
     end
+
     attr_accessor :title, :isbn, :authors, :published_at
 
     def initialize(params)
@@ -22,6 +16,8 @@ module Echocat
       @isbn = params[:isbn]
       @authors = params[:authors]
       @published_at = params[:published_at]
+
+      Magazine.all << self
     end
 
     def to_s
