@@ -1,4 +1,3 @@
-# require_relative '../spec_helper'
 require_relative "../../../lib/models/book"
 require_relative "../../../lib/models/author"
 

@@ -1,5 +1,4 @@
 require "csv"
-require "pry"
 
 module CsvImporter
   class << self
@@ -34,10 +33,6 @@ module CsvImporter
           published_at: row[:publishedAt],
         }
       end
-    end
-
-    def load_publications(magazine_path:, book_path:)
-      load_magazines(magazine_path) + load_books(book_path)
     end
 
     private
